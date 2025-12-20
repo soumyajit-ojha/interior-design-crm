@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quotation Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+
+<body style="
+      margin: 0;
+      background: #f7f7fa;
+      font-family: 'Inter', sans-serif;
+      color: #222;
+    ">
+  <div style="
+        max-width: 600px;
+        margin: 32px auto;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        padding: 0 0 24px 0;
+        border: 1px solid #ececec;
+      ">
+
+    <div class="main-content-card" style="
+          margin: 24px;
+          background: #fff;
+          border-radius: 12px;
+          border: 1px solid #ececec;
+          padding: 0;
+        ">
+      <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ececec;
+            padding: 24px;
+          ">
+        <div>
+          <div style="font-size: 22px; font-weight: 600; margin-bottom: 4px">
+            {{ quotation.quotation_title }}<br />{{ quotation.client_fk.client_name }}
+          </div>
+        </div>
+        <img src="https://dev.igolohomes.com/assets/logo-BtDnaAgI.png" alt="igolo" style="height: 42px; margin-left: 400px;" />
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; padding: 24px; font-size: 14px">
+        <div style="display: flex; flex: 2 1 440px; min-width: 360px; gap: 24px">
+          <div style="flex: 1 1 220px; min-width: 180px">
+            <div style="color: #666666; font-size: 13px; margin-bottom: 4px">
+              Client Info
+            </div>
+            <div style="font-weight: 600; font-size: 16px">
+              Mr/. {{quotation.client_fk.client_name}}
+            </div>
+            <span>{{ quotation.client_fk.city }}, </span>
+            <span>{{ quotation.client_fk.society_name }}, </span>
+            <span>{{ quotation.client_fk.flat_number }}</span>
+            <div>{{ quotation.client_fk.email }}</div>
+            <div>{{ quotation.client_fk.phone }}</div>
+          </div>
+
+          <div style="flex: 1 1 220px; min-width: 200px">
+            <div style="
+                  color: #666666;
+                  font-size: 13px;
+                  margin-bottom: 4px;
+                  margin-left: 155px;
+                ">
+              Quotation No
+            </div>
+            <div style="font-weight: 600; margin-left: 88px">
+              {{quotation.quotation_number}}
+            </div>
+            <div style="
+                  color: #666666;
+                  font-size: 13px;
+                  margin-top: 8px;
+                  margin-left: 209px;
+                ">
+              Date
+            </div>
+            <div style="margin-left: 155px">{{quotation.quotation_date}}</div>
+            <div style="
+                  color: #666666;
+                  font-size: 13px;
+                  margin-top: 8px;
+                  margin-left: 177px;
+                ">
+              Valid Until
+            </div>
+            <div style="margin-left: 155px">15 July 2025</div>
+          </div>
+        </div>
+
+        <!-- Remaining Details -->
+        <div style="flex: 1 1 180px; min-width: 140px">
+          <div style="color: #666; font-size: 13px; margin-bottom: 4px">
+            BHK Type
+          </div>
+          <div>{{ quotation.bhk_type_fk.bhk_name }}</div>
+          <div style="color: #666666; font-size: 13px; margin-top: 8px">
+            Material Tier
+          </div>
+          <div>{{ quotation.material_tier_fk.tier_name }}</div>
+        </div>
+
+        <div >
+          <div style="
+                color: #666666;
+                font-size: 13px;
+                margin-bottom: 4px;
+                display: flex;
+                justify-content: end;
+              ">
+            
+            <p>
+              Scope of Work <br/>
+              {% for scope in quotation.scope_of_work %}
+              {{ scope.scope_of_work }}{% if not forloop.last %} {% endif %}
+              {% endfor %}
+            </p>
+          </div>
+          <div style="
+                color: #666666;
+                font-size: 13px;
+                margin-bottom: 4px;
+                margin-left: 170px;
+              ">
+            Salesperson
+          </div>
+          <div style="margin-left: 170px">{{ quotation.salesperson_fk.username }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding: 0 24px 24px 24px">
+      <div style="
+              font-family: Inter, sans-serif;
+              font-weight: 500;
+              font-style: normal;
+              font-size: 16px;
+              line-height: 100%;
+              letter-spacing: 0.45px;
+              color: #000000cc;
+              margin-bottom: 8px;
+            ">
+        Room-wise Quotation
+      </div>
+
+      <hr style="
+              width: auto;
+              border: 0.45px solid #d49557;
+              opacity: 1;
+              margin: 6px 0;
+            " />
+
+      {% for room in rooms %}
+      <div style="
+              font-family: Inter, sans-serif;
+              font-weight: 700;
+              font-style: normal;
+              font-size: 16px;
+              line-height: 100%;
+              letter-spacing: 0.38px;
+              color: rgba(0, 0, 0, 0.8);
+              margin: 16px 0 8px 0;
+            ">
+        {{ room.room_type_fk.room_name }}
+      </div>
+
+      <div style="overflow-x: auto">
+        <table style="
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 13px;
+                text-align: center;
+              ">
+          <tr style="
+                  background: #fff;
+                  font-family: Inter, sans-serif;
+                  font-weight: 400;
+                  font-style: normal;
+                  font-size: 12.07px;
+                  line-height: 100%;
+                  letter-spacing: 0.45px;
+                  color: #666666;
+                ">
+            <th style="padding: 8px; text-align: left; font-weight: 400">
+              Item
+            </th>
+            <th style="padding: 8px; text-align: center; font-weight: 400">
+              Unit
+            </th>
+            <th style="padding: 8px; text-align: center; font-weight: 400">
+              Qty
+            </th>
+            <th style="
+                    padding: 4px;
+                    text-align: center;
+                    white-space: nowrap;
+                    font-weight: 400;
+                  ">
+              Rate
+            </th>
+            <th style="padding: 8px; text-align: right; font-weight: 400">
+              Shutter Finish
+            </th>
+            <th style="padding: 8px; text-align: right; font-weight: 400">
+              Amount
+            </th>
+          </tr>
+          {% for item in room.items %}
+          <tr style="
+                  font-family: Inter, sans-serif;
+                  font-weight: 500;
+                  font-style: normal;
+                  font-size: 10.88px;
+                  line-height: 100%;
+                  letter-spacing: 0.45px;
+                  color: rgba(0, 0, 0, 0.8);
+                  border-bottom: 0.5px solid rgba(194, 194, 194, 0.5);
+                ">
+            <td style="padding: 8px; text-align: left">{{ item.item_fk.item_name }}</td>
+            <td style="
+                    font-family: Inter, sans-serif;
+                    font-weight: 400;
+                    font-style: normal;
+                    font-size: 11.1px;
+                    line-height: 15.85px;
+                    letter-spacing: 0;
+                    color: #666666;
+                    padding: 8px;
+                  ">
+              {% if item.item_length and item.item_length_unit_fk %}
+              {{ item.item_length_unit_fk.unit_abbreviation }}
+              {% else %}
+              -
+              {% endif %}
+            </td>
+
+            <td style="padding: 8px">{{ item.item_quantity }}</td>
+            <td style="padding: 8px">₹{{ item.rate }}</td>
+            <td style="padding: 8px; text-align: right">{{ item.shutter_finish_fk.shutter_finish_name }}</td>
+            <td style="padding: 8px; text-align: right; font-weight: 400">₹{{ item.amount }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% endfor %}
+
+
+      <!-- <div style="padding: 0 24px 24px 24px"> -->
+      <div style="
+              font-family: Inter, sans-serif;
+              font-weight: 500;
+              font-style: normal;
+              font-size: 16px;
+              line-height: 100%;
+              letter-spacing: 0.45px;
+              color: rgba(0, 0, 0, 0.8);
+              margin: 16px 0 8px 0;
+            ">
+        Summary Calculation
+        <!-- </div> -->
+
+        <hr style="
+              width: auto;
+              border: 0.45px solid #d49557;
+              opacity: 1;
+              margin: 6px 0;
+            " />
+        <div style="display: flex; flex-wrap: wrap; justify-content: flex-end">
+          <div style="flex: 1 1 220px; min-width: 180px; margin-right: 24px">
+            <table style="
+                  width: 100%;
+                  border-collapse: collapse;
+                  font-size: 13px;
+                  text-align: left;
+                ">
+              <tr>
+                <th style="
+                      font-family: Inter, sans-serif;
+                      font-weight: 400;
+                      font-style: normal;
+                      font-size: 13px;
+                      line-height: 100%;
+                      letter-spacing: 0.45px;
+                      color: #666666;
+                      text-align: left;
+                      padding: 4px 0;
+                    ">
+                  Milestone
+                </th>
+
+                <th style="
+                      font-family: Inter, sans-serif;
+                      font-weight: 400;
+                      font-style: normal;
+                      font-size: 13px;
+                      line-height: 100%;
+                      letter-spacing: 0.45px;
+                      color: #666666;
+                      padding: 4px 16px;
+                    ">
+                  Percentage(%)
+                </th>
+                <th style="
+                      font-family: Inter, sans-serif;
+                      font-weight: 400;
+                      font-style: normal;
+                      font-size: 13px;
+                      line-height: 100%;
+                      letter-spacing: 0.45px;
+                      color: #666666;
+                      text-align: left;
+                      padding: 4px 0;
+                    ">
+                  Amount
+                </th>
+              </tr>
+              {% for milestone in quotation.milestones %}
+              <tr>
+                <td style="
+                      font-family: Inter, sans-serif;
+                      font-weight: 400;
+                      font-style: normal;
+                      font-size: 13px;
+                      line-height: 100%;
+                      letter-spacing: 0.45px;
+                      color: #666666;
+                      text-align: left;
+                      padding: 4px 0;
+                    ">{{ milestone.milestone_name }}</td>
+                <td style="font-family: Inter, sans-serif;
+                      font-weight: 400;
+                      font-style: normal;
+                      font-size: 13px;
+                      line-height: 100%;
+                      letter-spacing: 0.45px;
+                      color: #666666;
+                      padding: 10px 16px;">{{ milestone.percentage }}</td>
+                <td style="font-family: Inter, sans-serif;
+                      font-weight: 400;
+                      font-style: normal;
+                      font-size: 13px;
+                      line-height: 100%;
+                      letter-spacing: 0.45px;
+                      color: #666666;
+                      text-align: left;
+                      padding: 4px 0;">₹{{ milestone.amount }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
+          <div style="flex: 1 1 220px; min-width: 180px; margin-left: 82px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px">
+              <tr>
+                <td style="
+                      font-family: Inter, sans-serif;
+                      font-weight: 400;
+                      font-style: normal;
+                      font-size: 13px;
+                      line-height: 100%;
+                      letter-spacing: 0.45px;
+                      color: #666666;
+                      text-align: left;
+                      padding: 4px 0;
+                    ">
+                  SubTotal
+                </td>
+                <td style="padding: 4px 0; text-align: right; font-weight: 600">
+                  ₹{{ quotation.subtotal }}
+                </td>
+              </tr>
+              <tr>
+                <td style="
+                      font-family: Inter, sans-serif;
+                      font-weight: 400;
+                      font-style: normal;
+                      font-size: 13px;
+                      line-height: 100%;
+                      letter-spacing: 0.45px;
+                      color: #666666;
+                      text-align: left;
+                      padding: 4px 0;
+                    ">
+                  Discount
+                </td>
+                <td style="padding: 4px 0; text-align: right; font-weight: 600">
+                  -₹{{ quotation.discount_amount }}
+                </td>
+              </tr>
+              <tr>
+                <td style="
+                      font-family: Inter, sans-serif;
+                      font-weight: 400;
+                      font-style: normal;
+                      font-size: 13px;
+                      line-height: 100%;
+                      letter-spacing: 0.45px;
+                      color: #666666;
+                      text-align: left;
+                      padding: 4px 0;
+                    ">
+                  Tax (18%)
+                </td>
+                <td style="padding: 4px 0; text-align: right; font-weight: 600">
+                  ₹{{ quotation.tax_amount }}
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 4px 0; font-weight: 700">Grand Total</td>
+                <td style="
+                      padding: 4px 0;
+                      text-align: right;
+                      font-weight: 700;
+                      color: #d68a2b;
+                      font-size: 18px;
+                    ">
+                  ₹{{ quotation.grand_total }}
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <br>
+      <!-- <div style="padding: 0 24px 24px 24px"> -->
+        <div style="color: #000000; font-size: 14px; margin: 16px 0 8px 0">
+          Terms & Notes
+        </div>
+        <hr style="
+              width: 490px;
+              border: 0.45px solid #d49557;
+              opacity: 1;
+              margin: 6px 0;
+            " />
+        <ul style="
+              margin: 0 0 8px 16px;
+              padding: 0;
+              font-size: 13px;
+              color: #333333;
+            ">
+                    <li style="padding: 5px 0px;">50% Advance Payment to initiate the project.</li>
+                    <li style="padding: 5px 0px;">Remaining in two stages:45% upon mid-stage completion and 5% on final handover.</li>
+                    <li style="padding: 5px 0px;">Price is subject to change in case of variation in scope or material.</li>
+                    <li style="padding: 5px 0px;">All products carry respective manufacturer warranties.</li>
+                    <li style="padding: 5px 0px;">Delivery Timeline: 45-60 working days from start date as per the scope of work.</li>
+                    <li style="padding: 5px 0px;">Site to be made available and ready for execution.</li>
+                    <li style="padding: 5px 0px; color: red;">Design Phase will be started after receiving the token amount of 30000/- or 10% from the quotation.</li>
+                    <li style="padding: 5px 0px;">10 years warranty provided on Wood and hardware.</li>
+                    <li style="padding: 5px 0px;">1-free service will provided every year till warranty period.</li>
+                    <li style="padding: 5px 0px;">No warranty will be provided on wallpapers and wallpaints.</li>
+
+                </ul>
+                <div style="
+              font-family: Inter, sans-serif;
+              font-weight: 400;
+              font-style: normal;
+              font-size: 13px;
+              line-height: 100%;
+              letter-spacing: 0%;
+              color: #333333;
+              padding:6px
+            ">
+                    We look forward to working with you to bring your vision to life.<br/>
+                    Please do not hesitate to contact us if you have any further questions<br/>
+                    or would like to make adjustments to this proposal.
+                </div>
+            </div>
+
+      <div style="text-align: center; padding: 16px 0 0 0">
+        <img src="https://dev.igolohomes.com/assets/logo-BtDnaAgI.png" alt="igolo" style="height: 32px" />
+        <div style="
+              font-family: Inter, sans-serif;
+              font-weight: 400;
+              font-style: italic;
+              font-size: 14px;
+              line-height: 100%;
+              letter-spacing: 0;
+              text-align: center;
+              color: var(--Secondary-Text, #666666);
+              margin-top: 4px;
+            ">
+          Crafting Spaces That Inspire
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+
+    @media (max-width: 700px) {
+      body>div {
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .main-content-card {
+        margin: 0 !important;
+        border-radius: 0;
+        border: none !important;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .main-content-card>div {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+      }
+
+      body>div>div:first-child {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+      }
+
+      table,
+      th,
+      td {
+        font-size: 12px !important;
+        padding: 6px !important;
+      }
+
+      .main-content-card table {
+        width: calc(100% + 32px) !important;
+        margin-left: -16px !important;
+      }
+
+      .main-content-card>div:nth-child(2)>div {
+        flex-basis: 100% !important;
+        min-width: unset !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-bottom: 12px;
+        margin-top: 12px !important;
+      }
+
+      .main-content-card>div:nth-child(2)>div:first-child {
+        margin-top: 0 !important;
+      }
+    }
+  </style>
+</body>
+
+</html>

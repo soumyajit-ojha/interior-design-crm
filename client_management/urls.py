@@ -1,0 +1,116 @@
+"""
+Urls for Client Management
+"""
+
+from django.urls import path
+from .views import (
+    ConvertLeadToClientAPIView,
+    ClientDetailsListAPIView,
+    ClientDeatilView,
+    ClientExpensesView,
+    ProjectExpensesView,
+    ClientTimelineView,
+    ClientPaymentsView,
+    # SubmitExpenseView,
+    ClientTimelineCreateAPIView,
+    ClientPaymentsCreateAPIView,
+    ClientBudgetStatusView,
+    ClientPaymentsUpdateAPIView,
+    SprintSummaryAPIView,
+    MarkSprintOrItemAPIView,
+    ClientDetailsView,
+    # DraftExpensesAPIView,
+    # ApproveExpenseAPIView,
+    # AddDraftExpenseAPIView,
+    SaveExpenseAPIView,
+    SavedExpenseGroupByDraftAPIView,
+    VendorListAPIView,
+    MaterialListAPIView,
+    ClientExpenseSubmissionListAPIView,
+    ProjectExpenseSubmissionListAPIView,
+    ProjectExpenseRequestListAPIView,
+    ProjectExpenseRequestUpdateAPIView,
+    ClientExpenseRequestListAPIView,
+    ClientExpenseRequestUpdateAPIView ,
+    RecentActivityListAPIView,
+    DashboardAnalyticsAPIView,
+)
+
+urlpatterns = [
+    path(
+        "convert-to-client/",
+        ConvertLeadToClientAPIView.as_view(),
+        name="convert-to-client",
+    ),
+    path("list/", ClientDetailsListAPIView.as_view(), name="client-list"),
+    path("details/<int:pk>/", ClientDeatilView.as_view(), name="client-list"),
+    path(
+        "expenses/<int:client_id>/",
+        ClientExpensesView.as_view(),
+        name="client-expenses",
+    ),
+    path(
+        "project-expenses/<int:project_id>/",
+        ProjectExpensesView.as_view(),
+        name="project-expenses",
+    ),
+    
+    path(
+        "payments/<int:client_id>/",
+        ClientPaymentsView.as_view(),
+        name="client-payments",
+    ),
+    path(
+        "timeline/<int:client_id>/",
+        ClientTimelineView.as_view(),
+        name="client-timeline",
+    ),
+    # path("add-expense/<int:client_id>/", AddExpenseView.as_view(), name="add-expenses"),
+    path(
+        "add-timeline/<int:client_id>/",
+        ClientTimelineCreateAPIView.as_view(),
+        name="add-timeline",
+    ),
+    path(
+        "add-payment/<int:client_id>/",
+        ClientPaymentsCreateAPIView.as_view(),
+        name="add-payment",
+    ),
+    path(
+        "update-payment/",
+        ClientPaymentsUpdateAPIView.as_view(),
+        name="update-payment",
+    ),
+    path(
+        "budget-status/<int:client_id>/",
+        ClientBudgetStatusView.as_view(),
+        name="client-budget-status",
+    ),
+    path("sprint_get/", SprintSummaryAPIView.as_view(), name="sprint_get"),
+    path("mark_as_read/", MarkSprintOrItemAPIView.as_view(), name="mark_as_read"),
+    path(
+        "client/<int:client_id>/",
+        ClientDetailsView.as_view(),
+        name="client-details",
+    ),
+    # path("draft_expense/", DraftExpensesAPIView.as_view(), name="draft_expense"),
+    # path("draft-expense/add/", AddDraftExpenseAPIView.as_view(), name="add-draft-expense"),
+    # path(
+    #     "approve-expense/<int:expense_id>/",
+    #     ApproveExpenseAPIView.as_view(),
+    #     name="approve-expense",
+    # ),
+    path("save-expenses/", SaveExpenseAPIView.as_view(), name="save-expenses"),
+    path("project_expense_requests/", ProjectExpenseRequestListAPIView.as_view(), name="project-expense-requests"),
+    path("project_expense_requests/<int:request_id>/update-status/", ProjectExpenseRequestUpdateAPIView.as_view(), name="project-expense-request-update-status"),
+    path("client_expense_requests/", ClientExpenseRequestListAPIView.as_view(), name="client-expense-requests"),
+    path("client_expense_requests/<int:request_id>/update-status/", ClientExpenseRequestUpdateAPIView.as_view(), name="client-expense-request-update-status"),
+    # path("submit-expenses/", SubmitExpenseView.as_view(), name="submit-expenses"),
+    path("saved-expenses/group-by-draft/<int:client_id>/", SavedExpenseGroupByDraftAPIView.as_view(), name="saved-expenses-group-by-draft"),
+    path("vendors/", VendorListAPIView.as_view(), name="vendor-list"),
+    path("materials/", MaterialListAPIView.as_view(), name="material-list"),
+    path("client-expense-submissions/", ClientExpenseSubmissionListAPIView.as_view(), name="client-expense-submissions"),
+    path("project-expense-submissions/", ProjectExpenseSubmissionListAPIView.as_view(), name="project-expense-submissions"),
+    path("recent-activities/", RecentActivityListAPIView.as_view(), name="recent-activities"),
+    path("dashboard-analytics/", DashboardAnalyticsAPIView.as_view(), name="dashboard-analytics"),
+]
